@@ -5,9 +5,11 @@ import com.codeborne.selenide.Configuration;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import io.severex.feasy.qa.model.DashboardsPage;
 import io.severex.feasy.qa.model.HomePage;
 import io.severex.feasy.qa.model.registration.BecomeAnAuthorPage;
 import io.severex.feasy.qa.model.registration.RegistrationPage;
+import org.junit.Assert;
 
 import static com.codeborne.selenide.Selenide.open;
 
@@ -15,6 +17,7 @@ public class Stepdefs {
     private HomePage homePage = new HomePage();
     private RegistrationPage registrationPage = new RegistrationPage();
     private BecomeAnAuthorPage becomeAnAuthorPage = new BecomeAnAuthorPage();
+    private DashboardsPage dashboardsPage = new DashboardsPage();
     private String uri = "https://grinfer.com/";
 
     public void setUp() {
@@ -95,10 +98,13 @@ public class Stepdefs {
 
     @Then("First name should be {string}")
     public void firstNameShouldBe(String arg0) {
-
+        String title = dashboardsPage.getDashBardTitle();
+        Assert.assertTrue(title.contains(arg0));
     }
 
     @And("Last name should be {string}")
     public void lastNameShouldBe(String arg0) {
+        String title = dashboardsPage.getDashBardTitle();
+        Assert.assertTrue(title.contains(arg0));
     }
 }
