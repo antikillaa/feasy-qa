@@ -18,7 +18,7 @@ public class RegistrationPage {
 
 
     public void setEmail(String string) {
-        string = string + RandomStringUtils.randomAlphabetic(5) + "@mail.com";
+        string = string + "_" + RandomStringUtils.randomAlphabetic(5) + "@mail.com";
         emailInputField.val(string);
     }
 

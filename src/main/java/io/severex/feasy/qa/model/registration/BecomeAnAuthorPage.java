@@ -7,6 +7,8 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class BecomeAnAuthorPage {
     private SelenideElement openTopicsSelect = $(By.xpath("//div[@id='form_topics']"));
+    private SelenideElement openSubtopicsSelect = $(By.xpath("//div[@id='form_subTopicIds']"));
+
     private SelenideElement chooseTopicSelect;
     private SelenideElement chooseSubTopicSelect;
     private SelenideElement titleInput = $(By.id("form_title"));
@@ -21,7 +23,7 @@ public class BecomeAnAuthorPage {
     }
 
     public void setSubcategory(String string) {
-        openTopicsSelect.click();
+        openSubtopicsSelect.click();
         chooseSubTopicSelect = $(By.xpath("//li[text()='" + string + "']"));
         chooseSubTopicSelect.click();
     }

@@ -18,7 +18,4 @@ Feature: Registration user
     And Check author agreement checkbox
     Then Click submit button
     Then First name should be "AutoTester"
-    And  Last name should be "Tester"
-
-
-
+    And Last name should be "Tester"
