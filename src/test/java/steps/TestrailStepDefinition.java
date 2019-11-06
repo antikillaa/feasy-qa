@@ -1,10 +1,6 @@
 package steps;
 
 import cucumber.api.Scenario;
-import cucumber.api.java.AfterStep;
-import cucumber.api.java.Before;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
 import io.severex.feasy.qa.api.APIException;
 import io.severex.feasy.qa.app_context.RunContext;
 import io.severex.feasy.qa.service.TestrailService;
@@ -18,7 +14,7 @@ public class TestrailStepDefinition {
     private RunContext context = new RunContext();
     private TestrailService testrailService = new TestrailService();
 
-    @Before
+    //    @Before
     public void createSuite() throws IOException, APIException {
         if (context.get("runId", Long.class) == null) {
             JSONObject run = testrailService.createRun();
@@ -27,19 +23,19 @@ public class TestrailStepDefinition {
         }
     }
 
-    @Given("TC: {string}")
+    //    @Given("TC: {string}")
     public void tc(String arg0) {
         context.put("tcId", Integer.parseInt(arg0));
     }
 
-    @Then("Add result for TC")
+    //    @Then("Add result for TC")
     public void addResultToTestrail() throws IOException, APIException {
         Integer tcId = context.get("tcId", Integer.class);
         Long suiteId = context.get("runId", Long.class);
         testrailService.addResultPass(suiteId, tcId);
     }
 
-    @AfterStep
+    //    @AfterStep
     public void doSomethingAfterStep(Scenario scenario) throws IOException, APIException {
         if (scenario.isFailed()) {
             Integer tcId = context.get("tcId", Integer.class);

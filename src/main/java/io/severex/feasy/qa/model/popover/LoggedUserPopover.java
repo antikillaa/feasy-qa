@@ -1,4 +1,4 @@
-package io.severex.feasy.qa.model;
+package io.severex.feasy.qa.model.popover;
 
 import com.codeborne.selenide.SelenideElement;
 

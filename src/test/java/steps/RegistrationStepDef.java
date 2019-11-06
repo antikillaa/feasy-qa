@@ -7,7 +7,7 @@ import cucumber.api.java.en.Then;
 import io.severex.feasy.qa.app_context.RunContext;
 import io.severex.feasy.qa.model.DashboardsPage;
 import io.severex.feasy.qa.model.HomePage;
-import io.severex.feasy.qa.model.LoggedUserPopover;
+import io.severex.feasy.qa.model.popover.LoggedUserPopover;
 import io.severex.feasy.qa.model.registration.BecomeAnAuthorPage;
 import io.severex.feasy.qa.model.registration.RegistrationPage;
 import org.apache.commons.lang3.RandomStringUtils;
