@@ -1,5 +1,7 @@
 package steps;
 
+import cucumber.api.Scenario;
+import cucumber.api.java.AfterStep;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -9,6 +11,8 @@ import io.severex.feasy.qa.service.TestrailService;
 import org.json.simple.JSONObject;
 
 import java.io.IOException;
+
+import static com.codeborne.selenide.Selenide.screenshot;
 
 public class TestrailStepDefinition {
     private RunContext context = new RunContext();
@@ -32,6 +36,17 @@ public class TestrailStepDefinition {
     public void addResultToTestrail() throws IOException, APIException {
         Integer tcId = context.get("tcId", Integer.class);
         Long suiteId = context.get("runId", Long.class);
-        testrailService.addResult(suiteId, tcId);
+        testrailService.addResultPass(suiteId, tcId);
+    }
+
+    @AfterStep
+    public void doSomethingAfterStep(Scenario scenario) throws IOException, APIException {
+        if (scenario.isFailed()) {
+            Integer tcId = context.get("tcId", Integer.class);
+            Long suiteId = context.get("runId", Long.class);
+            String scenarioName = scenario.getName();
+            screenshot(scenarioName);
+            testrailService.addResultFail(suiteId, tcId, scenarioName);
+        }
     }
 }

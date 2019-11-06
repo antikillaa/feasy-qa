@@ -4,8 +4,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        plugin = {"pretty"},
-        tags = {"smoke"}
+        plugin = {"pretty"}
 )
 public class RunCucumberTest {
 }

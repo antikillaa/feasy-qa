@@ -18,6 +18,8 @@ public class TestrailService {
     private final static String PASSWORD = TestrailConfig.PASSWORD;
     private final static int PROJECT_ID = TestrailConfig.PROJECT_ID;
 
+    private APIClient apiClient;
+
     private static APIClient createTestRailInstance() {
         APIClient client = new APIClient(ENDPOINT);
         client.setUser(USERNAME);
@@ -39,11 +41,25 @@ public class TestrailService {
     }
 
 
-    public void addResult(Long runId, Integer tcId) throws IOException, APIException {
-        APIClient apiClient = createTestRailInstance();
+    public void addResultPass(Long runId, Integer tcId) throws IOException, APIException {
+        apiClient = createTestRailInstance();
         Map<String, java.io.Serializable> data = new HashMap<>();
         data.put("status_id", 1);
         data.put("comment", "This test worked fine!");
         JSONObject r = (JSONObject) apiClient.sendPost("add_result_for_case/" + runId + "/" + tcId, data);
     }
+
+    public void addResultFail(Long runId, Integer tcId, String scenarioName) throws IOException, APIException {
+        apiClient = createTestRailInstance();
+
+        Map<String, java.io.Serializable> data = new HashMap<>();
+        data.put("status_id", 5);
+        data.put("comment", "FAILED");
+
+        JSONObject r1 = (JSONObject) apiClient.sendPost("add_result_for_case/" + runId + "/" + tcId, data);
+
+        apiClient.sendPost("add_attachment_to_result/" + r1.get("id") + "/", "build/reports/tests/" + scenarioName + ".html");
+        apiClient.sendPost("add_attachment_to_result/" + r1.get("id") + "/", "build/reports/tests/" + scenarioName + ".png");
+    }
+
 }
