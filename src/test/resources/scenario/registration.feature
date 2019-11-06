@@ -6,8 +6,8 @@ Feature: Registration user
     Then Click become author button
     And Input First Name: "AutoTester"
     And Input Last Name: "Tester"
-    And Input Email: "auto"
-    And Input Password: "Password!1"
+    And Input Email
+    And Input Password
     And Check agreement checkbox
     Then Click submit button
     Then Choose "Business" category
@@ -16,6 +16,14 @@ Feature: Registration user
     And Input personal description: "Description"
     Then Click submit button
     And Check author agreement checkbox
+    Then Click submit button
+    Then First name should be "AutoTester"
+    And Last name should be "Tester"
+    Then Click Avatar link
+    And Click Sign Out link
+    Then Click Sign In link
+    And Input Email
+    And Input Password
     Then Click submit button
     Then First name should be "AutoTester"
     And Last name should be "Tester"

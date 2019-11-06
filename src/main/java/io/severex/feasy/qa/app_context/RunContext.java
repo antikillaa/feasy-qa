@@ -8,10 +8,10 @@ public class RunContext {
     private static RunContext instance;
     private Map<String, Object> context = new HashMap<>();
 
-    private RunContext() {
+    public RunContext() {
     }
 
-    public static RunContext get() {
+    public static RunContext get(String email) {
         if (instance == null) {
             instance = new RunContext();
         }

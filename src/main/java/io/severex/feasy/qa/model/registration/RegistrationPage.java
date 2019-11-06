@@ -1,7 +1,6 @@
 package io.severex.feasy.qa.model.registration;
 
 import com.codeborne.selenide.SelenideElement;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -18,7 +17,6 @@ public class RegistrationPage {
 
 
     public void setEmail(String string) {
-        string = string + "_" + RandomStringUtils.randomAlphabetic(5) + "@mail.com";
         emailInputField.val(string);
     }
 

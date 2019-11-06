@@ -1,5 +1,6 @@
 package io.severex.feasy.qa.model.registration;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
@@ -17,6 +18,7 @@ public class BecomeAnAuthorPage {
 
 
     public void setCategory(String string) {
+        openSubtopicsSelect.waitUntil(Condition.visible, 60000);
         openTopicsSelect.click();
         chooseTopicSelect = $(By.xpath("//li[text()='" + string + "']"));
         chooseTopicSelect.click();

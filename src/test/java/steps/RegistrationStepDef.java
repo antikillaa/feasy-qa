@@ -5,19 +5,25 @@ import com.codeborne.selenide.Configuration;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import io.severex.feasy.qa.app_context.RunContext;
 import io.severex.feasy.qa.model.DashboardsPage;
 import io.severex.feasy.qa.model.HomePage;
+import io.severex.feasy.qa.model.LoggedUserPopover;
 import io.severex.feasy.qa.model.registration.BecomeAnAuthorPage;
 import io.severex.feasy.qa.model.registration.RegistrationPage;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Assert;
 
 import static com.codeborne.selenide.Selenide.open;
 
-public class Stepdefs {
+public class RegistrationStepDef {
+    private RunContext context = new RunContext();
+
     private HomePage homePage = new HomePage();
     private RegistrationPage registrationPage = new RegistrationPage();
     private BecomeAnAuthorPage becomeAnAuthorPage = new BecomeAnAuthorPage();
     private DashboardsPage dashboardsPage = new DashboardsPage();
+    private LoggedUserPopover loggedUserPopover = new LoggedUserPopover();
     private String uri = "https://grinfer.com/";
 
     public void setUp() {
@@ -51,14 +57,22 @@ public class Stepdefs {
         registrationPage.setLastName(arg0);
     }
 
-    @And("Input Email: {string}")
-    public void inputEmail(String arg0) {
-        registrationPage.setEmail(arg0);
+    @And("Input Email")
+    public void inputEmail() {
+        String email;
+        if (context.get("email", String.class) == null) {
+            email = "Auto_" + RandomStringUtils.randomAlphabetic(5) + "@mail.com";
+            context.put("email", email);
+        } else {
+            email = context.get("email", String.class);
+        }
+
+        registrationPage.setEmail(email);
     }
 
-    @And("Input Password: {string}")
-    public void inputPassword(String arg0) {
-        registrationPage.setPassword(arg0);
+    @And("Input Password")
+    public void inputPassword() {
+        registrationPage.setPassword("Password!1");
     }
 
     @And("Check agreement checkbox")
@@ -106,5 +120,20 @@ public class Stepdefs {
     public void lastNameShouldBe(String arg0) {
         String title = dashboardsPage.getDashBardTitle();
         Assert.assertTrue(title.contains(arg0));
+    }
+
+    @Then("Click Avatar link")
+    public void clickAvatarLink() {
+        homePage.avatarButton.click();
+    }
+
+    @And("Click Sign Out link")
+    public void clickSignOutLink() {
+        loggedUserPopover.signOutLink.click();
+    }
+
+    @Then("Click Sign In link")
+    public void clickSignInLink() {
+        homePage.signInLink.click();
     }
 }
