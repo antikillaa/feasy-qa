@@ -1,6 +1,5 @@
 package steps;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -24,9 +23,14 @@ public class RegistrationStepDef {
     private BecomeAnAuthorPage becomeAnAuthorPage = new BecomeAnAuthorPage();
     private DashboardsPage dashboardsPage = new DashboardsPage();
     private LoggedUserPopover loggedUserPopover = new LoggedUserPopover();
-    private String uri = "https://grinfer.com/";
 
-    public void setUp() {
+    private String env = "stage";
+    private String envUsername = "foo";
+    private String envPassword = "bar";
+
+    private String uri = "https://" + envUsername + ":" + envPassword + "@" + env + ".grinfer.com/";
+
+    public static void setUp() {
         Configuration.timeout = 60000;
     }
 
@@ -37,13 +41,11 @@ public class RegistrationStepDef {
 
     @Then("Click registration button")
     public void clickRegistrationButton() {
-        homePage.registrationButton.should(Condition.visible);
         homePage.registrationButton.click();
     }
 
     @Then("Click become author button")
     public void clickBecomeAuthorButton() {
-        registrationPage.becomeAuthorButton.waitUntil(Condition.visible, 60000);
         registrationPage.clickBecomeAuthorButton();
     }
 

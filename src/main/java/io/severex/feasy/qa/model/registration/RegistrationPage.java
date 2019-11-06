@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 import static com.codeborne.selenide.Selenide.$;
 
 public class RegistrationPage {
-    public SelenideElement becomeAuthorButton = $(By.xpath("//div[text()='Become an Author']"));
+    private SelenideElement becomeAuthorButton = $(By.xpath("//div[text()='Become an Author']"));
 
     private SelenideElement emailInputField = $(By.id("form_email"));
     private SelenideElement firstNameInputField = $(By.id("form_firstName"));
@@ -18,6 +18,10 @@ public class RegistrationPage {
 
     public void setEmail(String string) {
         emailInputField.val(string);
+    }
+
+    public SelenideElement getEmailInputField() {
+        return emailInputField;
     }
 
     public void setFirstName(String string) {

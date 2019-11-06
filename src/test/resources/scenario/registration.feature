@@ -1,6 +1,8 @@
 Feature: Registration user
 
+  @Tag:smoke
   Scenario: Registration as Author
+    Given TC: "189"
     Given Go to the "home" page
     Then Click registration button
     Then Click become author button
@@ -27,3 +29,4 @@ Feature: Registration user
     Then Click submit button
     Then First name should be "AutoTester"
     And Last name should be "Tester"
+    Then Add result for TC
