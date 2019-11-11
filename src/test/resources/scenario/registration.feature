@@ -23,7 +23,6 @@ Feature: Registration user "Create suite"
     Then Click submit button
     Then First name should be "AutoTester"
     And Last name should be "Tester"
-    Then Add result for TC
 
   Scenario: Entering email for notification C183
     Given TC: "183"
@@ -33,7 +32,6 @@ Feature: Registration user "Create suite"
     And Input Valid Email in Enter your email address
     Then Click submit button
     Then Confirmation popup is appear
-    Then Add result for TC
 
   Scenario: Clicking on 'Sign-in' button C250
     Given TC: "250"
@@ -41,3 +39,32 @@ Feature: Registration user "Create suite"
     Then Click Sign in to beta button
     Then Sign in page is opened
     Then "sign-in" page is opened
+
+  Scenario: User login with correct credentials C1
+    Given TC: "1"
+    Given Go to the "home" page
+    Then Click registration button
+    Then Click become author button
+    And Input First Name: "AutoTester"
+    And Input Last Name: "Tester"
+    And Input Email
+    And Input Password
+    And Check agreement checkbox
+    Then Click submit button
+    Then Choose "Business" category
+    And Choose "Finance" subcategory
+    And Input title: "Title"
+    And Input personal description: "Description"
+    Then Click submit button
+    And Check author agreement checkbox
+    Then Click submit button
+    Then First name should be "AutoTester"
+    And Last name should be "Tester"
+    Then Click Avatar link
+    And Click Sign Out link
+    Then Click Sign In link
+    And Input Email
+    And Input Password
+    Then Click submit button
+    Then First name should be "AutoTester"
+    And Last name should be "Tester"

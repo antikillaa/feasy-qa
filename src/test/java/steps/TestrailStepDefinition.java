@@ -2,13 +2,15 @@ package steps;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cucumber.api.Scenario;
+import cucumber.api.java.After;
 import cucumber.api.java.AfterStep;
 import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
 import io.severex.feasy.qa.api.APIException;
 import io.severex.feasy.qa.app_context.RunContext;
 import io.severex.feasy.qa.service.TestrailService;
+import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONObject;
+import org.junit.Before;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +39,7 @@ public class TestrailStepDefinition {
         File file = new File(path);
         var car = objectMapper.readValue(file, HashMap.class);
 
-        var tcs = car.get("tcs_all");
+        var tcs = car.get("tcs_automated");
         return (ArrayList<Integer>) tcs;
     }
 
@@ -46,22 +48,27 @@ public class TestrailStepDefinition {
         context.put("tcId", Integer.parseInt(arg0));
     }
 
-    @Then("Add result for TC")
-    public void addResultToTestrail() throws IOException, APIException {
-        Integer tcId = context.get("tcId", Integer.class);
-//        Long suiteId = context.get("runId", Long.class);
-        JSONObject jsonObject = testrailService.getLastRun();
-        testrailService.addResultPass((Long) jsonObject.get("id"), tcId);
-    }
-
     @AfterStep
     public void doSomethingAfterStep(Scenario scenario) throws IOException, APIException {
         if (scenario.isFailed()) {
             Integer tcId = context.get("tcId", Integer.class);
-            Long suiteId = context.get("runId", Long.class);
+            JSONObject jsonObject = testrailService.getLastRun();
             String scenarioName = scenario.getName();
             screenshot(scenarioName);
-            testrailService.addResultFail(suiteId, tcId, scenarioName);
+            testrailService.addResultFail((Long) jsonObject.get("id"), tcId, scenarioName);
         }
+    }
+
+    @Before
+    public void doSomethingBefore() throws IOException {
+        if (new File("built").exists())
+            FileUtils.deleteDirectory(new File("built"));
+    }
+
+    @After
+    public void addResultToTestrail() throws IOException, APIException {
+        Integer tcId = context.get("tcId", Integer.class);
+        JSONObject jsonObject = testrailService.getLastRun();
+        testrailService.addResultPass((Long) jsonObject.get("id"), tcId);
     }
 }
