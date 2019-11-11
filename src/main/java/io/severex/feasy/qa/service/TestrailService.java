@@ -2,23 +2,27 @@ package io.severex.feasy.qa.service;
 
 import io.severex.feasy.qa.api.APIClient;
 import io.severex.feasy.qa.api.APIException;
+import io.severex.feasy.qa.app_context.RunContext;
 import io.severex.feasy.qa.config.TestrailConfig;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class TestrailService {
     private final static String ENDPOINT = TestrailConfig.ENDPOINT;
     private final static String USERNAME = TestrailConfig.USERNAME;
     private final static String PASSWORD = TestrailConfig.PASSWORD;
+    private final static int USER_ID = TestrailConfig.USER_ID;
     private final static int PROJECT_ID = TestrailConfig.PROJECT_ID;
 
     private APIClient apiClient;
+    private RunContext context = new RunContext();
 
     private static APIClient createTestRailInstance() {
         APIClient client = new APIClient(ENDPOINT);
@@ -27,19 +31,27 @@ public class TestrailService {
         return client;
     }
 
-    public JSONObject createRun() throws IOException, APIException {
+    public JSONObject createRun(ArrayList<Integer> tcs) throws IOException, APIException {
         SimpleDateFormat format = new SimpleDateFormat("dd MMM yyy kk mm");
         String dateString = format.format(new Date());
         String runName = "Automation " + dateString;
         APIClient apiClient = createTestRailInstance();
         Map<String, Object> data = new HashMap<>();
         data.put("name", runName);
-        data.put("suite_id", 2);
         data.put("include_all", Boolean.FALSE);
-        data.put("case_ids", Set.of(189));
-        return (JSONObject) apiClient.sendPost("add_run/" + PROJECT_ID, data);
+        data.put("suite_id", 2);
+        data.put("case_ids", tcs);
+        JSONObject r = (JSONObject) apiClient.sendPost("add_run/" + PROJECT_ID, data);
+        context.put("runObject", JSONObject.class);
+        return r;
     }
 
+    public JSONObject getLastRun() throws IOException, APIException {
+        apiClient = createTestRailInstance();
+        JSONArray runs = (JSONArray) apiClient.sendGet("get_runs/" + PROJECT_ID + "&created_by=" + USER_ID);
+
+        return (JSONObject) runs.get(0);
+    }
 
     public void addResultPass(Long runId, Integer tcId) throws IOException, APIException {
         apiClient = createTestRailInstance();
@@ -61,5 +73,4 @@ public class TestrailService {
         apiClient.sendPost("add_attachment_to_result/" + r1.get("id") + "/", "build/reports/tests/" + scenarioName + ".html");
         apiClient.sendPost("add_attachment_to_result/" + r1.get("id") + "/", "build/reports/tests/" + scenarioName + ".png");
     }
-
 }

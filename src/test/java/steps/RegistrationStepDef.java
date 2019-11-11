@@ -2,51 +2,42 @@ package steps;
 
 import com.codeborne.selenide.Configuration;
 import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import io.severex.feasy.qa.app_context.RunContext;
 import io.severex.feasy.qa.model.DashboardsPage;
-import io.severex.feasy.qa.model.HomePage;
+import io.severex.feasy.qa.model.LandingPage;
 import io.severex.feasy.qa.model.popover.LoggedUserPopover;
 import io.severex.feasy.qa.model.registration.BecomeAnAuthorPage;
 import io.severex.feasy.qa.model.registration.RegistrationPage;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Assert;
 
-import static com.codeborne.selenide.Selenide.open;
-
 public class RegistrationStepDef {
     private RunContext context = new RunContext();
 
-    private HomePage homePage = new HomePage();
+    private LandingPage landingPage = new LandingPage();
     private RegistrationPage registrationPage = new RegistrationPage();
     private BecomeAnAuthorPage becomeAnAuthorPage = new BecomeAnAuthorPage();
     private DashboardsPage dashboardsPage = new DashboardsPage();
     private LoggedUserPopover loggedUserPopover = new LoggedUserPopover();
 
-    private String env = "stage";
-    private String envUsername = "foo";
-    private String envPassword = "bar";
-
-    private String uri = "https://" + envUsername + ":" + envPassword + "@" + env + ".grinfer.com/";
-
     public static void setUp() {
         Configuration.timeout = 60000;
     }
 
-    @Given("Go to the {string} page")
-    public void goToThePage(String arg0) {
-        open(uri + arg0);
-    }
-
     @Then("Click registration button")
     public void clickRegistrationButton() {
-        homePage.registrationButton.click();
+        landingPage.registrationButton.click();
     }
 
     @Then("Click become author button")
     public void clickBecomeAuthorButton() {
         registrationPage.clickBecomeAuthorButton();
+    }
+
+    @Then("Input Invalid Email")
+    public void inputInvalidEmail() {
+        registrationPage.setEmail("email");
     }
 
     @And("Input First Name: {string}")
@@ -126,7 +117,7 @@ public class RegistrationStepDef {
 
     @Then("Click Avatar link")
     public void clickAvatarLink() {
-        homePage.avatarButton.click();
+        landingPage.avatarButton.click();
     }
 
     @And("Click Sign Out link")
@@ -136,6 +127,17 @@ public class RegistrationStepDef {
 
     @Then("Click Sign In link")
     public void clickSignInLink() {
-        homePage.signInLink.click();
+        landingPage.signInLink.click();
     }
+
+    @Then("Invalid Email Error Appear")
+    public void invalidEmailErrorAppear() {
+        landingPage.checkEmailError();
+    }
+
+    @Then("Confirmation popup is appear")
+    public void confirmationPopupIsAppear() {
+        landingPage.checkConfirmationPopup();
+    }
+
 }

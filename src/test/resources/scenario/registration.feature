@@ -1,6 +1,10 @@
-Feature: Registration user
+Feature: Registration user "Create suite"
 
-  Scenario: Registration as Author
+  Scenario:
+  //   Given Create Test Suite
+
+  Scenario: Author registration C189
+    Given TC: "189"
     Given Go to the "home" page
     Then Click registration button
     Then Click become author button
@@ -19,11 +23,21 @@ Feature: Registration user
     Then Click submit button
     Then First name should be "AutoTester"
     And Last name should be "Tester"
-    Then Click Avatar link
-    And Click Sign Out link
-    Then Click Sign In link
-    And Input Email
-    And Input Password
+    Then Add result for TC
+
+  Scenario: Entering email for notification C183
+    Given TC: "183"
+    Given Go to the main page
+    And Input Invalid Email in Enter your email address
     Then Click submit button
-    Then First name should be "AutoTester"
-    And Last name should be "Tester"
+    And Input Valid Email in Enter your email address
+    Then Click submit button
+    Then Confirmation popup is appear
+    Then Add result for TC
+
+  Scenario: Clicking on 'Sign-in' button C250
+    Given TC: "250"
+    Given Go to the main page
+    Then Click Sign in to beta button
+    Then Sign in page is opened
+    Then "sign-in" page is opened

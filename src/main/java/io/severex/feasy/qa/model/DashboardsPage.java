@@ -12,4 +12,5 @@ public class DashboardsPage {
         dashBardTitle = $(By.xpath("//h2"));
         return dashBardTitle.getText();
     }
+
 }
