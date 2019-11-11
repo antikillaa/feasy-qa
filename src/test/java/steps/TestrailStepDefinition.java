@@ -46,17 +46,6 @@ public class TestrailStepDefinition {
         context.put("tcId", Integer.parseInt(arg0));
     }
 
-    //    @AfterStep
-    public void doSomethingAfterStep(Scenario scenario) throws IOException, APIException {
-        if (scenario.isFailed()) {
-            Integer tcId = context.get("tcId", Integer.class);
-            JSONObject jsonObject = testrailService.getLastRun();
-            String scenarioName = scenario.getName();
-            screenshot(scenarioName);
-            testrailService.addResultFail((Long) jsonObject.get("id"), tcId, scenarioName);
-        }
-    }
-
     @Before
     public void doSomethingBefore() throws IOException {
         if (new File("built").exists())
