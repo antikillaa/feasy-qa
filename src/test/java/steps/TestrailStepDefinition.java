@@ -3,7 +3,6 @@ package steps;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
-import cucumber.api.java.AfterStep;
 import cucumber.api.java.en.Given;
 import io.severex.feasy.qa.api.APIException;
 import io.severex.feasy.qa.app_context.RunContext;
@@ -39,8 +38,7 @@ public class TestrailStepDefinition {
         File file = new File(path);
         var car = objectMapper.readValue(file, HashMap.class);
 
-        var tcs = car.get("tcs_automated");
-        return (ArrayList<Integer>) tcs;
+        return (ArrayList<Integer>) car.get("tcs_automated");
     }
 
     @Given("TC: {string}")
@@ -48,7 +46,7 @@ public class TestrailStepDefinition {
         context.put("tcId", Integer.parseInt(arg0));
     }
 
-    @AfterStep
+    //    @AfterStep
     public void doSomethingAfterStep(Scenario scenario) throws IOException, APIException {
         if (scenario.isFailed()) {
             Integer tcId = context.get("tcId", Integer.class);
@@ -66,9 +64,17 @@ public class TestrailStepDefinition {
     }
 
     @After
-    public void addResultToTestrail() throws IOException, APIException {
-        Integer tcId = context.get("tcId", Integer.class);
-        JSONObject jsonObject = testrailService.getLastRun();
-        testrailService.addResultPass((Long) jsonObject.get("id"), tcId);
+    public void addResultToTestrail(Scenario scenario) throws IOException, APIException {
+        if (scenario.isFailed()) {
+            Integer tcId = context.get("tcId", Integer.class);
+            JSONObject jsonObject = testrailService.getLastRun();
+            String scenarioName = scenario.getName();
+            screenshot(scenarioName);
+            testrailService.addResultFail((Long) jsonObject.get("id"), tcId, scenarioName);
+        } else {
+            Integer tcId = context.get("tcId", Integer.class);
+            JSONObject jsonObject = testrailService.getLastRun();
+            testrailService.addResultPass((Long) jsonObject.get("id"), tcId);
+        }
     }
 }

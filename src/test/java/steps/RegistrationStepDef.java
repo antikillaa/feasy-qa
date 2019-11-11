@@ -5,6 +5,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import io.severex.feasy.qa.app_context.RunContext;
 import io.severex.feasy.qa.model.DashboardsPage;
+import io.severex.feasy.qa.model.HomePage;
 import io.severex.feasy.qa.model.LandingPage;
 import io.severex.feasy.qa.model.popover.LoggedUserPopover;
 import io.severex.feasy.qa.model.registration.BecomeAnAuthorPage;
@@ -20,6 +21,7 @@ public class RegistrationStepDef {
     private BecomeAnAuthorPage becomeAnAuthorPage = new BecomeAnAuthorPage();
     private DashboardsPage dashboardsPage = new DashboardsPage();
     private LoggedUserPopover loggedUserPopover = new LoggedUserPopover();
+    private HomePage homePage = new HomePage();
 
     public static void setUp() {
         Configuration.timeout = 60000;
@@ -27,7 +29,7 @@ public class RegistrationStepDef {
 
     @Then("Click registration button")
     public void clickRegistrationButton() {
-        landingPage.registrationButton.click();
+        homePage.registrationButton.click();
     }
 
     @Then("Click become author button")
@@ -117,7 +119,7 @@ public class RegistrationStepDef {
 
     @Then("Click Avatar link")
     public void clickAvatarLink() {
-        landingPage.avatarButton.click();
+        homePage.avatarButton.click();
     }
 
     @And("Click Sign Out link")
@@ -127,7 +129,7 @@ public class RegistrationStepDef {
 
     @Then("Click Sign In link")
     public void clickSignInLink() {
-        landingPage.signInLink.click();
+        homePage.signInLink.click();
     }
 
     @Then("Invalid Email Error Appear")
