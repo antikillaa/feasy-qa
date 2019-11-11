@@ -7,6 +7,8 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class RegistrationPage {
     private SelenideElement becomeAuthorButton = $(By.xpath("//div[text()='Become an Author']"));
+    private SelenideElement becomeLearnerButton = $(By.xpath("//div[text()='Become a Learner']"));
+
 
     private SelenideElement emailInputField = $(By.id("form_email"));
     private SelenideElement firstNameInputField = $(By.id("form_firstName"));
@@ -47,4 +49,9 @@ public class RegistrationPage {
     public void clickBecomeAuthorButton() {
         becomeAuthorButton.click();
     }
+
+    public void clickBecomeLearnerButton() {
+        becomeLearnerButton.click();
+    }
+
 }

@@ -19,6 +19,7 @@ public class BasicStepDef {
 
     @Given("Go to the {string} page")
     public void goToThePage(String arg0) {
+        close();
         open(uri + arg0);
     }
 

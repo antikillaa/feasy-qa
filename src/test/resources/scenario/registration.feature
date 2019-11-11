@@ -1,7 +1,7 @@
 Feature: Registration user "Create suite"
 
   Scenario:
-  //   Given Create Test Suite
+    Given Create Test Suite
 
   Scenario: Author registration C189
     Given TC: "189"
@@ -69,7 +69,7 @@ Feature: Registration user "Create suite"
     Then First name should be "AutoTester"
     And Last name should be "Tester"
 
-  Scenario: User login with correct credentials C3
+  Scenario: User logout C3
     Given TC: "3"
     Given Go to the "home" page
     Then Click registration button
@@ -93,3 +93,41 @@ Feature: Registration user "Create suite"
     And Click Sign Out link
     Then Registration button is displayed
     Then "home" page is opened
+
+  Scenario: Registration with correct credentials (learner) C148
+    Given TC: "148"
+    Given Go to the "home" page
+    Then Click registration button
+    Then Click become learner button
+    And Input First Name: "AutoTester"
+    And Input Last Name: "Tester"
+    And Input Email
+    And Input Password
+    And Check agreement checkbox
+    Then Click submit button
+    Then User successfully registered popup displayed
+    Then "home" page is opened
+
+  Scenario: Becoming a specialist (without availability) C194
+    Given TC: "194"
+    Given Go to the "home" page
+    Then Click registration button
+    Then Click become learner button
+    And Input First Name: "AutoTester"
+    And Input Last Name: "Tester"
+    And Input Email
+    And Input Password
+    And Check agreement checkbox
+    Then Click submit button
+    Then User successfully registered popup displayed
+    Then "home" page is opened
+    Then Click become author link
+    Then Choose "Business" category
+    And Choose "Finance" subcategory
+    And Input title: "Title"
+    And Input personal description: "Description"
+    Then Click submit button
+    And Check author agreement checkbox
+    Then Click submit button
+    Then My Courses Link is displayed
+    Then "my-courses" page is opened

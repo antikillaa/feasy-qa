@@ -11,4 +11,14 @@ public class HomeStepDef {
     public void registrationButtonIsDisplayed() {
         homePage.registrationButton.should(Condition.visible);
     }
+
+    @Then("User successfully registered popup displayed")
+    public void userSuccessfullyPopupDisplayed() {
+        homePage.userSuccessfullyCreatedPopup.should(Condition.visible);
+    }
+
+    @Then("Click become author link")
+    public void clickBecomeAuthorLink() {
+        homePage.becomeAnAuthorLink.click();
+    }
 }

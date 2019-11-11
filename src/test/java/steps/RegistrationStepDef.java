@@ -142,4 +142,8 @@ public class RegistrationStepDef {
         landingPage.checkConfirmationPopup();
     }
 
+    @Then("Click become learner button")
+    public void clickBecomeLearnerButton() {
+        registrationPage.clickBecomeLearnerButton();
+    }
 }
