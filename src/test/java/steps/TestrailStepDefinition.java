@@ -32,7 +32,7 @@ public class TestrailStepDefinition {
     }
 
     private ArrayList<Integer> getTestCasesIds() throws IOException {
-        String path = "/home/potato/IdeaProjects/feasy/feasy-qa/src/test/resources/TCs.json";
+        String path = "src/test/resources//TCs.json";
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File(path);
         var car = objectMapper.readValue(file, HashMap.class);

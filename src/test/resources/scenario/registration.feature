@@ -1,7 +1,7 @@
 Feature: Registration user "Create suite"
 
   Scenario:
-  //   Given Create Test Suite
+    Given Create Test Suite
 
   Scenario: Author registration C189
     Given TC: "189"
